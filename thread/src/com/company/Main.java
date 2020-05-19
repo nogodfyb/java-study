@@ -7,7 +7,9 @@ public class Main {
         //test2();
         //test3();
         //test4();
-        test5();
+        //test5();
+        //test6();
+        //test7();
     }
 
     private static void test1(){
@@ -60,6 +62,36 @@ public class Main {
         Thread thread1 = new Thread(ticket2, "窗口1");
         Thread thread2 = new Thread(ticket2, "窗口2");
         Thread thread3 = new Thread(ticket2, "窗口3");
+        //同时访问共享数据
+        thread1.start();
+        thread2.start();
+        thread3.start();
+    }
+
+    /**
+     * 同步方法
+     */
+    private static void test6(){
+        Ticket3 ticket3 = new Ticket3();
+        //创建三个线程，都去操作ticket中的共享数据
+        Thread thread1 = new Thread(ticket3, "窗口1");
+        Thread thread2 = new Thread(ticket3, "窗口2");
+        Thread thread3 = new Thread(ticket3, "窗口3");
+        //同时访问共享数据
+        thread1.start();
+        thread2.start();
+        thread3.start();
+    }
+
+    /**
+     * lock锁
+     */
+    private static void test7(){
+        Ticket4 ticket4 = new Ticket4();
+        //创建三个线程，都去操作ticket中的共享数据
+        Thread thread1 = new Thread(ticket4, "窗口1");
+        Thread thread2 = new Thread(ticket4, "窗口2");
+        Thread thread3 = new Thread(ticket4, "窗口3");
         //同时访问共享数据
         thread1.start();
         thread2.start();
