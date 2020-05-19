@@ -1,5 +1,8 @@
 package com.company;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,7 +13,8 @@ public class Main {
         //test5();
         //test6();
         //test7();
-        test8();
+        //test8();
+        test9();
     }
 
     private static void test1(){
@@ -141,5 +145,22 @@ public class Main {
             }
         },"唤醒线程").start();
     }
+
+    /**
+     * 线程池
+     */
+    private static void test9(){
+        //创建线程池对象,包含两个线程
+        ExecutorService service = Executors.newFixedThreadPool(2);
+        MyRunnable myRunnable = new MyRunnable();
+        service.submit(myRunnable);
+        service.submit(myRunnable);
+        //当线程池中的线程对象已被耗尽时，其余任务等待,线程池中的对象被归还
+        service.submit(myRunnable);
+        service.submit(myRunnable);
+        //关闭线程池，一般不做这个操作
+        service.shutdown();
+    }
+
 
 }
