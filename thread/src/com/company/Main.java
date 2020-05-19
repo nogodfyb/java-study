@@ -10,6 +10,7 @@ public class Main {
         //test5();
         //test6();
         //test7();
+        test8();
     }
 
     private static void test1(){
@@ -96,6 +97,49 @@ public class Main {
         thread1.start();
         thread2.start();
         thread3.start();
+    }
+
+    /**
+     * wait notify
+     */
+    private static void test8(){
+        Object obj = new Object();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    synchronized (obj){
+                        System.out.println(Thread.currentThread().getName()+"---获取对象锁，调用wait方法,进入waiting状态，释放对象锁");
+                        try {
+                            //无限等待
+                            obj.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(Thread.currentThread().getName()+"---从waiting状态醒来，获取到对象锁，继续执行");
+                    }
+                }
+            }
+        },"等待线程").start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        //每隔三秒，唤醒一次
+                        System.out.println(Thread.currentThread().getName()+"---等待三秒");
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    synchronized (obj){
+                        System.out.println(Thread.currentThread().getName()+"---获取对象锁，调用notify方法,释放对象锁，唤醒其他线程");
+                        obj.notify();
+                    }
+                }
+            }
+        },"唤醒线程").start();
     }
 
 }
