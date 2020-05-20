@@ -4,7 +4,7 @@ import java.io.*;
 
 public class IO {
     public static void main(String[] args) throws Exception {
-        test18();
+        test19();
     }
 
     /**
@@ -284,6 +284,16 @@ public class IO {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    /**
+     * 异常处理,jdk7
+     */
+    private static void test19(){
+        try (FileWriter fileWriter = new FileWriter("C:\\test\\a.txt")) {
+            fileWriter.write("我是谁");
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 }
